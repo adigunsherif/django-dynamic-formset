@@ -56,7 +56,7 @@
                 var delCssSelector = $.trim(options.deleteCssClass).replace(/\s+/g, '.'),
                     addCssSelector = $.trim(options.addCssClass).replace(/\s+/g, '.');
 
-                var delButtonHTML = '<a class="' + options.deleteCssClass + '" href="javascript:void(0);">' + options.deleteText +'</a>';
+                var delButtonHTML = '<a class="' + options.deleteCssClass + '" href="javascript:void(0)">' + options.deleteText +'</a>';
                 if (options.deleteContainerClass) {
                     // If we have a specific container for the remove button,
                     // place it as the last child of that container:
@@ -91,7 +91,7 @@
                         // and hide it, then let Django handle the deleting:
                         del.val('on');
                         row.hide();
-                        forms = $('.' + options.formCssClass).not(':hidden');
+                        forms = $('.' + options.formCssClass);
                         //totalForms.val(forms.length);
                     } else {
                         row.remove();
@@ -143,8 +143,10 @@
             }
             if (hasChildElements(row)) {
                 row.addClass(options.formCssClass);
-                insertDeleteLink(row);
-                applyExtraClasses(row, i);
+                if (row.is(':visible')) {
+                    insertDeleteLink(row);
+                    applyExtraClasses(row, i);
+                }
             }
         });
 
@@ -180,7 +182,7 @@
             // FIXME: Perhaps using $.data would be a better idea?
             options.formTemplate = template;
 
-            var addButtonHTML = '<a class="' + options.addCssClass + '" href="javascript:void(0);">' + options.addText + '</a>';
+            var addButtonHTML = '<a class="' + options.addCssClass + '" href="javascript:void(0)">' + options.addText + '</a>';
             if (options.addContainerClass) {
                 // If we have a specific container for the "add" button,
                 // place it as the last child of that container:
